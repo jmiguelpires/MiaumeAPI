@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace MiaumeAPI.Controllers
 {
-    //[Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -23,12 +22,6 @@ namespace MiaumeAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsuario()
         {
-            //return Ok(new
-            //{
-            //    //success = true,
-            //    data = await _appDbContext.Usuario.ToListAsync()
-            //});
-
             var Usuarios = await _appDbContext.Usuario.ToListAsync();
 
             return Ok(Usuarios);
@@ -38,13 +31,6 @@ namespace MiaumeAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsuarioPorCPF(long cpfcnpj)
         {
-            //return Ok(new
-            //{
-            //    //success = true,
-            //    data = await _appDbContext.Usuario.ToListAsync()
-            //});
-
-            //var UsuarioPorCPF = _appDbContext.Usuario.Single(u => u.CPFCNPJ == cpfcnpj);
             var UsuarioPorCPF = _appDbContext.Usuario
                 .Where(u => u.CPFCNPJ == cpfcnpj)
                 .FirstOrDefault();
@@ -55,8 +41,7 @@ namespace MiaumeAPI.Controllers
         [Route("api/GetUsuarioLogin")]
         [HttpGet]
         public async Task<IActionResult> GetUsuarioLogin(string email, string senha)
-        {
-            
+        {            
             var UsuarioLogin = _appDbContext.Usuario
                 .Where(u => u.email == email && u.senha == senha)
                 .FirstOrDefault();
@@ -69,14 +54,8 @@ namespace MiaumeAPI.Controllers
         public async Task<IActionResult> CreateUsuario(Usuario usuario)
         {
             _appDbContext.Usuario.Add(usuario);
-            //await _appDbContext.SaveChangesAsync();
+            
             var Usuario = await _appDbContext.SaveChangesAsync();
-
-            //return Ok(new
-            //{
-            //    success = true,
-            //    data = usuario
-            //});
 
             return Ok(Usuario);
         }

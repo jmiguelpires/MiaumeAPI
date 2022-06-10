@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace MiaumeAPI.Controllers
 {
-    //[Route("api/[controller]")]
     [ApiController]
     public class UsuarioPetController : ControllerBase
     {
@@ -23,13 +22,10 @@ namespace MiaumeAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPetUsuario()
         {
-            //return Ok(new
-            //{
-            //    success = true,
-            //    data = await _appDbContext.UsuarioPet.ToListAsync()
-            //});
 
-            var PetsAdocao = await _appDbContext.UsuarioPet.ToListAsync();
+            var PetsAdocao = await _appDbContext.UsuarioPet
+                .OrderByDescending(u => u.dtCadastro)
+                .ToListAsync();
 
             return Ok(PetsAdocao);
         }
@@ -54,7 +50,6 @@ namespace MiaumeAPI.Controllers
         public async Task<IActionResult> UpdatePetUsuario(long cpfcnpj, long idPet, UsuarioPet usuarioPet)
         {
             if (cpfcnpj != usuarioPet.CPFCNPJ && idPet != usuarioPet.idPet)
-            //if (idPet != usuarioPet.idPet)
             {
                 return BadRequest();
             }
